@@ -1,0 +1,52 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+# data (CRITICAL)
+data/
+datasets/
+*.npz
+*.npy
+*.csv
+*.json
+
+
+# dvc
+.dvc/cache
+.dvc/tmp
+*.dvc
+
+
+# models
+models/
+checkpoints/
+*.pt
+*.pth
+*.ckpt
+
+# logs
+logs/
+runs/
+wandb/
+mlruns/
+tensorboard/
+
+.ipynb_checkpoints/
+
+.vscode/
+.idea/
+.DS_Store
+
+
+experiments/
+outputs/
+results/
+
+
