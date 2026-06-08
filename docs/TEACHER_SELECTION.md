@@ -25,6 +25,29 @@ RTMPose проще использовать в экосистеме MMPose и у
 В MMPose model zoo для `rtmpose-l-aic-coco` указан COCO AP `0.765`, а для варианта `384x288` - `0.773`.
 Это не самый тяжелый возможный Teacher, но хороший воспроизводимый первый шаг.
 
+## Kaggle fallback без MMCV
+
+На Kaggle с Python 3.12 установка `mmcv/mmpose` может ломаться. Поэтому добавлен альтернативный
+Teacher через HuggingFace Transformers:
+
+```text
+usyd-community/vitpose-plus-base
+```
+
+Это ViTPose++-модель, запускается без OpenMMLab/MMCV и использует тот же top-down принцип:
+crop считается изображением одного человека, bbox задается как весь crop.
+
+Команда:
+
+```bash
+python scripts/run_hf_vitpose_teacher.py \
+  --dataset-dir <filtered-crops-dir> \
+  --output-dir <output-dir> \
+  --model-name usyd-community/vitpose-plus-base \
+  --device cuda:0 \
+  --limit 128
+```
+
 ## Источники
 
 - ViTPose paper: https://arxiv.org/abs/2204.12484

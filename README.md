@@ -333,6 +333,17 @@ Teacher используется только для генерации псев
   --output-dir data/qa/keypoints_preview
 ```
 
+Если MMPose/MMCV не ставится в Kaggle, используйте HuggingFace ViTPose:
+
+```bash
+python scripts/run_hf_vitpose_teacher.py \
+  --dataset-dir data/processed/nuscenes_pedestrian_crops_filtered \
+  --output-dir data/pseudo/nuscenes_pose_teacher \
+  --model-name usyd-community/vitpose-plus-base \
+  --device cuda:0 \
+  --limit 128
+```
+
 И собрать COCO-like dataset:
 
 ```bash

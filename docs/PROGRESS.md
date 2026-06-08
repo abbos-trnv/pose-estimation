@@ -39,6 +39,7 @@ nuScenes bbox -> pedestrian crop -> Teacher keypoints -> filtered pseudo-labels 
 22. Добавлен notebook-шаблон для Teacher pseudo-labeling в GPU-среде.
 23. Добавлен экспорт filtered crops в Kaggle-friendly zip archive.
 24. Создан архив `data/exports/nuscenes_pedestrian_crops_filtered.zip`: `458M`, `37626` файлов.
+25. Добавлен HuggingFace ViTPose Teacher fallback для Kaggle без MMPose/MMCV.
 
 ## Текущее наблюдение
 
