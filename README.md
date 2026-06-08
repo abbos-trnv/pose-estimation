@@ -412,6 +412,24 @@ models/student_baseline/
   history.json
 ```
 
+Визуализация Student predictions:
+
+```bash
+python scripts/visualize_student_predictions.py \
+  --data-dir data/pseudo/nuscenes_pose_coco \
+  --checkpoint models/student_baseline/best.pt \
+  --output-dir data/qa/student_predictions
+```
+
+Speed benchmark:
+
+```bash
+python scripts/benchmark_student_speed.py \
+  --checkpoint models/student_baseline/best.pt \
+  --output-path logs/student_speed_b1.json \
+  --batch-size 1
+```
+
 ## Метрики
 
 Качество:

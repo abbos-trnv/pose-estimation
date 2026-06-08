@@ -93,7 +93,24 @@ history.json
 
 До полноценного сравнения еще нужно добавить:
 
-1. speed benchmark;
-2. экспорт модели;
-3. визуализацию Student predictions;
-4. более строгие PCK/OKS метрики.
+1. экспорт модели;
+2. более строгие PCK/OKS метрики;
+3. сравнение нескольких Student architectures.
+
+Визуализация Student predictions:
+
+```bash
+python scripts/visualize_student_predictions.py \
+  --data-dir <coco-data-dir> \
+  --checkpoint <output-dir>/best.pt \
+  --output-dir /kaggle/working/data/qa/student_predictions
+```
+
+Speed benchmark:
+
+```bash
+python scripts/benchmark_student_speed.py \
+  --checkpoint <output-dir>/best.pt \
+  --output-path /kaggle/working/logs/student_speed_b1.json \
+  --batch-size 1
+```
