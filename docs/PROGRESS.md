@@ -41,6 +41,7 @@ nuScenes bbox -> pedestrian crop -> Teacher keypoints -> filtered pseudo-labels 
 24. Создан архив `data/exports/nuscenes_pedestrian_crops_filtered.zip`: `458M`, `37626` файлов.
 25. Добавлен HuggingFace ViTPose Teacher fallback для Kaggle без MMPose/MMCV.
 26. Зафиксирована стратегия анализа pseudo-labels и добавлен фильтр Teacher confidence.
+27. Добавлен первый чистый PyTorch Student baseline: heatmap-based CNN, dataset loader, weighted MSE loss, PCK validation и checkpoints.
 
 ## Текущее наблюдение
 
@@ -74,5 +75,5 @@ present fraction: 0.3962
 5. Отрегулировать фильтрацию по Teacher confidence.
 6. Сгенерировать pseudo-labels на всем filtered dataset.
 7. Собрать финальный COCO-like dataset.
-8. Реализовать train loop Student-модели.
-9. Запустить обучение в Kaggle notebook.
+8. Запустить обучение Student baseline в Kaggle notebook.
+9. Добавить speed benchmark и визуализацию Student predictions.

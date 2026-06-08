@@ -77,9 +77,23 @@ train_student(
 
 ## Что пока не реализовано
 
-Интерфейс `train_student(...)` добавлен, но сам train loop еще не реализован. До него нужно завершить:
+Добавлен первый чистый PyTorch baseline:
 
-1. Teacher inference.
-2. QA keypoints.
-3. Фильтрацию pseudo-labels.
-4. Финальный COCO-like dataset.
+```text
+SimplePoseStudent
+```
+
+Это компактная heatmap-based CNN-модель без MMPose/MMCV. Она обучается на `annotations.json` в COCO-like формате и сохраняет:
+
+```text
+best.pt
+last.pt
+history.json
+```
+
+До полноценного сравнения еще нужно добавить:
+
+1. speed benchmark;
+2. экспорт модели;
+3. визуализацию Student predictions;
+4. более строгие PCK/OKS метрики.

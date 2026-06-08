@@ -388,6 +388,30 @@ Student - финальная модель проекта. Она должна б
 
 Обучение планируется запускать в Kaggle notebook. При этом вся логика датасета, модели, loss, train loop и метрик должна жить в `src/`, а notebook должен быть короткой оболочкой запуска.
 
+Первый baseline реализован без MMPose/MMCV:
+
+```text
+SimplePoseStudent
+```
+
+Это компактная heatmap-based CNN-модель. Запуск обучения:
+
+```bash
+python scripts/train_student.py \
+  --config configs/training/student_baseline.json \
+  --data-dir data/pseudo/nuscenes_pose_coco \
+  --output-dir models/student_baseline
+```
+
+Результат:
+
+```text
+models/student_baseline/
+  best.pt
+  last.pt
+  history.json
+```
+
 ## Метрики
 
 Качество:
