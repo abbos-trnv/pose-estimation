@@ -3,12 +3,14 @@ name = "pose-estimation"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
-requires-python = ">=3.12"
+requires-python = ">=3.12,<3.14"
 dependencies = [
     "dvc>=3.67.1",
     "jupyter>=1.1.1",
     "matplotlib>=3.10.9",
-    "opencv-python>=4.13.0.92",
+    "numpy>=1.26,<2",
+    "nuscenes-devkit>=1.2.0",
+    "opencv-python>=4.10,<4.11",
     "pandas>=3.0.3",
     "polars>=1.41.0",
     "pyarrow>=24.0.0",

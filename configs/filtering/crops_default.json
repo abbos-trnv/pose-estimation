@@ -1,0 +1,8 @@
+{
+  "min_width": 48,
+  "min_height": 96,
+  "min_area": 4608,
+  "max_aspect_ratio": 1.2,
+  "min_aspect_ratio": 0.15,
+  "allowed_visibility_tokens": ["2", "3", "4"]
+}

@@ -1,0 +1,7 @@
+# Minimal runtime for Kaggle training orchestration.
+# Kaggle usually already provides torch/torchvision; install them separately only if needed.
+opencv-python>=4.10,<4.11
+numpy>=1.26,<2
+matplotlib>=3.10
+pycocotools>=2.0
+tqdm>=4.66

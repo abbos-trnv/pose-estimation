@@ -1,0 +1,21 @@
+{
+  "experiment_name": "student_baseline",
+  "data": {
+    "format": "coco_pose",
+    "num_keypoints": 17,
+    "image_size": [192, 256],
+    "heatmap_size": [48, 64]
+  },
+  "training": {
+    "epochs": 50,
+    "batch_size": 64,
+    "learning_rate": 0.001,
+    "weight_decay": 0.0001,
+    "num_workers": 2
+  },
+  "model": {
+    "name": "student_baseline",
+    "candidate": "rtmpose-t"
+  },
+  "metrics": ["pck", "oks", "latency_ms", "fps"]
+}

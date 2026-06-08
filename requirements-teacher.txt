@@ -1,0 +1,7 @@
+# Teacher inference environment.
+# Install PyTorch matching your CUDA version before installing OpenMMLab packages.
+opencv-python>=4.10,<4.11
+numpy>=1.26,<2
+mmengine>=0.10
+mmcv>=2.0
+mmpose>=1.3

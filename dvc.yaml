@@ -1,0 +1,135 @@
+stages:
+  prepare_nuscenes_dataroot:
+    cmd: .venv/bin/python scripts/prepare_nuscenes_dataroot.py --raw-dir data/raw --output-dir data/raw/nuscenes --version v1.0-trainval
+    deps:
+      - scripts/prepare_nuscenes_dataroot.py
+      - data/raw/v1.0-trainval_meta(3)/v1.0-trainval
+    outs:
+      - data/raw/nuscenes:
+          persist: true
+
+  extract_pedestrian_crops:
+    cmd: >-
+      MPLCONFIGDIR=/tmp/matplotlib .venv/bin/python scripts/extract_nuscenes_pedestrian_crops.py
+      --dataroot data/raw/nuscenes
+      --version v1.0-trainval
+      --output-dir data/processed/nuscenes_pedestrian_crops
+    deps:
+      - scripts/extract_nuscenes_pedestrian_crops.py
+      - src/dataset/nuscenes_pedestrian_crops.py
+      - data/raw/nuscenes
+    outs:
+      - data/processed/nuscenes_pedestrian_crops
+
+  validate_nuscenes_files:
+    cmd: >-
+      .venv/bin/python scripts/validate_nuscenes_files.py
+      --dataroot data/raw/nuscenes
+      --version v1.0-trainval
+      --output-path data/qa/nuscenes_file_coverage.json
+    deps:
+      - scripts/validate_nuscenes_files.py
+      - src/dataset/validate_nuscenes_files.py
+      - data/raw/nuscenes/v1.0-trainval/sample_data.json
+    outs:
+      - data/qa/nuscenes_file_coverage.json
+
+  extract_pedestrian_crops_smoke:
+    cmd: >-
+      MPLCONFIGDIR=/tmp/matplotlib .venv/bin/python scripts/extract_nuscenes_pedestrian_crops.py
+      --dataroot data/raw/nuscenes
+      --version v1.0-trainval
+      --output-dir data/processed/nuscenes_pedestrian_crops_smoke
+      --limit-samples 10
+    deps:
+      - scripts/extract_nuscenes_pedestrian_crops.py
+      - src/dataset/nuscenes_pedestrian_crops.py
+      - data/raw/nuscenes
+    outs:
+      - data/processed/nuscenes_pedestrian_crops_smoke
+
+  filter_pedestrian_crops:
+    cmd: >-
+      .venv/bin/python scripts/filter_crops.py
+      --input-dir data/processed/nuscenes_pedestrian_crops
+      --output-dir data/processed/nuscenes_pedestrian_crops_filtered
+      --config configs/filtering/crops_default.json
+      --copy-crops
+    deps:
+      - scripts/filter_crops.py
+      - src/dataset/filter_crops.py
+      - configs/filtering/crops_default.json
+      - data/processed/nuscenes_pedestrian_crops/manifest.jsonl
+    outs:
+      - data/processed/nuscenes_pedestrian_crops_filtered
+
+  filter_pedestrian_crops_smoke:
+    cmd: >-
+      .venv/bin/python scripts/filter_crops.py
+      --input-dir data/processed/nuscenes_pedestrian_crops_smoke
+      --output-dir data/processed/nuscenes_pedestrian_crops_smoke_filtered
+      --config configs/filtering/crops_default.json
+      --copy-crops
+    deps:
+      - scripts/filter_crops.py
+      - src/dataset/filter_crops.py
+      - configs/filtering/crops_default.json
+      - data/processed/nuscenes_pedestrian_crops_smoke/manifest.jsonl
+    outs:
+      - data/processed/nuscenes_pedestrian_crops_smoke_filtered
+
+  qa_crops_preview:
+    cmd: >-
+      .venv/bin/python scripts/visualize_crops.py
+      --dataset-dir data/processed/nuscenes_pedestrian_crops
+      --dataroot data/raw/nuscenes
+      --output-dir data/qa/crops_preview
+      --num-samples 64
+    deps:
+      - scripts/visualize_crops.py
+      - src/visualization/crops.py
+      - data/processed/nuscenes_pedestrian_crops/manifest.jsonl
+    outs:
+      - data/qa/crops_preview
+
+  qa_crops_preview_smoke:
+    cmd: >-
+      .venv/bin/python scripts/visualize_crops.py
+      --dataset-dir data/processed/nuscenes_pedestrian_crops_smoke
+      --dataroot data/raw/nuscenes
+      --output-dir data/qa/crops_preview_smoke
+      --num-samples 29
+    deps:
+      - scripts/visualize_crops.py
+      - src/visualization/crops.py
+      - data/processed/nuscenes_pedestrian_crops_smoke/manifest.jsonl
+    outs:
+      - data/qa/crops_preview_smoke
+
+  qa_filtered_crops_preview:
+    cmd: >-
+      .venv/bin/python scripts/visualize_crops.py
+      --dataset-dir data/processed/nuscenes_pedestrian_crops_filtered
+      --dataroot data/raw/nuscenes
+      --output-dir data/qa/crops_preview_filtered
+      --num-samples 64
+    deps:
+      - scripts/visualize_crops.py
+      - src/visualization/crops.py
+      - data/processed/nuscenes_pedestrian_crops_filtered/manifest.jsonl
+    outs:
+      - data/qa/crops_preview_filtered
+
+  qa_filtered_crops_preview_smoke:
+    cmd: >-
+      .venv/bin/python scripts/visualize_crops.py
+      --dataset-dir data/processed/nuscenes_pedestrian_crops_smoke_filtered
+      --dataroot data/raw/nuscenes
+      --output-dir data/qa/crops_preview_smoke_filtered
+      --num-samples 64
+    deps:
+      - scripts/visualize_crops.py
+      - src/visualization/crops.py
+      - data/processed/nuscenes_pedestrian_crops_smoke_filtered/manifest.jsonl
+    outs:
+      - data/qa/crops_preview_smoke_filtered

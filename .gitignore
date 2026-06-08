@@ -8,3 +8,31 @@ wheels/
 
 # Virtual environments
 .venv
+
+# Local editor/settings
+.vscode/
+
+# Runtime/cache artifacts
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.log
+.dvc/cache/
+.dvc/tmp/
+
+# Project data and generated artifacts are tracked through DVC, not Git.
+data/raw/**
+data/processed/**
+data/pseudo/**
+data/qa/**
+data/exports/**
+logs/**
+models/**
+
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+!data/pseudo/.gitkeep
+!data/qa/.gitkeep
+!data/exports/.gitkeep
+!logs/.gitkeep
+!models/.gitkeep

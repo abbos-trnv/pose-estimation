@@ -1,0 +1,223 @@
+schema: '2.0'
+stages:
+  prepare_nuscenes_dataroot:
+    cmd: .venv/bin/python scripts/prepare_nuscenes_dataroot.py --raw-dir 
+      data/raw --output-dir data/raw/nuscenes --version v1.0-trainval
+    deps:
+    - path: data/raw/v1.0-trainval_meta(3)/v1.0-trainval
+      hash: md5
+      md5: 7f000bd4e7494e50efc9c225b02be905.dir
+      size: 2601855290
+      nfiles: 13
+    - path: scripts/prepare_nuscenes_dataroot.py
+      hash: md5
+      md5: 95ac4afd0dd77f01cfada18c9583c00a
+      size: 3360
+    outs:
+    - path: data/raw/nuscenes
+      hash: md5
+      md5: f2d47363dce87b14bc20d379d484250d.dir
+      size: 11929205238
+      nfiles: 81174
+  extract_pedestrian_crops_smoke:
+    cmd: MPLCONFIGDIR=/tmp/matplotlib .venv/bin/python 
+      scripts/extract_nuscenes_pedestrian_crops.py --dataroot data/raw/nuscenes 
+      --version v1.0-trainval --output-dir 
+      data/processed/nuscenes_pedestrian_crops_smoke --limit-samples 10
+    deps:
+    - path: data/raw/nuscenes
+      hash: md5
+      md5: f2d47363dce87b14bc20d379d484250d.dir
+      size: 11929205238
+      nfiles: 81174
+    - path: scripts/extract_nuscenes_pedestrian_crops.py
+      hash: md5
+      md5: d2e456c28124cd92021ebdd5dc851c6d
+      size: 194
+    - path: src/dataset/nuscenes_pedestrian_crops.py
+      hash: md5
+      md5: ea9b85957e6459b7dc231877810d5da7
+      size: 7972
+    outs:
+    - path: data/processed/nuscenes_pedestrian_crops_smoke
+      hash: md5
+      md5: 99f275d0dfd733b8e231b1c315846e3a.dir
+      size: 183296
+      nfiles: 31
+  qa_crops_preview_smoke:
+    cmd: .venv/bin/python scripts/visualize_crops.py --dataset-dir 
+      data/processed/nuscenes_pedestrian_crops_smoke --dataroot 
+      data/raw/nuscenes --output-dir data/qa/crops_preview_smoke --num-samples 
+      29
+    deps:
+    - path: data/processed/nuscenes_pedestrian_crops_smoke/manifest.jsonl
+      hash: md5
+      md5: 480f6e6777dd3c82f60fe7b07a211b42
+      size: 21988
+    - path: scripts/visualize_crops.py
+      hash: md5
+      md5: e7ac91b437bab3695736d675c4d7a0db
+      size: 180
+    - path: src/visualization/crops.py
+      hash: md5
+      md5: b6efa53879f57f1eefec1c96981e4b73
+      size: 7684
+    outs:
+    - path: data/qa/crops_preview_smoke
+      hash: md5
+      md5: 880e70b55414beb4b1f09eed59b0562f.dir
+      size: 4454307
+      nfiles: 18
+  filter_pedestrian_crops_smoke:
+    cmd: .venv/bin/python scripts/filter_crops.py --input-dir 
+      data/processed/nuscenes_pedestrian_crops_smoke --output-dir 
+      data/processed/nuscenes_pedestrian_crops_smoke_filtered --config 
+      configs/filtering/crops_default.json --copy-crops
+    deps:
+    - path: configs/filtering/crops_default.json
+      hash: md5
+      md5: f27f2704307ab3f3b19d8fc80f9f538e
+      size: 165
+    - path: data/processed/nuscenes_pedestrian_crops_smoke/manifest.jsonl
+      hash: md5
+      md5: 480f6e6777dd3c82f60fe7b07a211b42
+      size: 21988
+    - path: scripts/filter_crops.py
+      hash: md5
+      md5: 611a7970918d4f515c1b23312416af21
+      size: 181
+    - path: src/dataset/filter_crops.py
+      hash: md5
+      md5: 9d22327e465dfcda3686d2435066a52a
+      size: 5672
+    outs:
+    - path: data/processed/nuscenes_pedestrian_crops_smoke_filtered
+      hash: md5
+      md5: 61683cc026d361cc675a43fb9bdf0313.dir
+      size: 182036
+      nfiles: 32
+  qa_filtered_crops_preview_smoke:
+    cmd: .venv/bin/python scripts/visualize_crops.py --dataset-dir 
+      data/processed/nuscenes_pedestrian_crops_smoke_filtered --dataroot 
+      data/raw/nuscenes --output-dir data/qa/crops_preview_smoke_filtered 
+      --num-samples 64
+    deps:
+    - path: 
+        data/processed/nuscenes_pedestrian_crops_smoke_filtered/manifest.jsonl
+      hash: md5
+      md5: 20d742202455705a91d7f1f2316094ff
+      size: 21254
+    - path: scripts/visualize_crops.py
+      hash: md5
+      md5: e7ac91b437bab3695736d675c4d7a0db
+      size: 180
+    - path: src/visualization/crops.py
+      hash: md5
+      md5: b6efa53879f57f1eefec1c96981e4b73
+      size: 7684
+    outs:
+    - path: data/qa/crops_preview_smoke_filtered
+      hash: md5
+      md5: 07232573c7c57e7fc1dc59c2e8dde6c4.dir
+      size: 4205406
+      nfiles: 17
+  extract_pedestrian_crops:
+    cmd: MPLCONFIGDIR=/tmp/matplotlib .venv/bin/python 
+      scripts/extract_nuscenes_pedestrian_crops.py --dataroot data/raw/nuscenes 
+      --version v1.0-trainval --output-dir 
+      data/processed/nuscenes_pedestrian_crops
+    deps:
+    - path: data/raw/nuscenes
+      hash: md5
+      md5: f2d47363dce87b14bc20d379d484250d.dir
+      size: 11929205238
+      nfiles: 81174
+    - path: scripts/extract_nuscenes_pedestrian_crops.py
+      hash: md5
+      md5: d2e456c28124cd92021ebdd5dc851c6d
+      size: 194
+    - path: src/dataset/nuscenes_pedestrian_crops.py
+      hash: md5
+      md5: ab293e5770e937300ed2edac871c721f
+      size: 9792
+    outs:
+    - path: data/processed/nuscenes_pedestrian_crops
+      hash: md5
+      md5: b1f677301bcce60c9b1e22f635d1a5c9.dir
+      size: 699607222
+      nfiles: 112024
+  filter_pedestrian_crops:
+    cmd: .venv/bin/python scripts/filter_crops.py --input-dir 
+      data/processed/nuscenes_pedestrian_crops --output-dir 
+      data/processed/nuscenes_pedestrian_crops_filtered --config 
+      configs/filtering/crops_default.json --copy-crops
+    deps:
+    - path: configs/filtering/crops_default.json
+      hash: md5
+      md5: f27f2704307ab3f3b19d8fc80f9f538e
+      size: 165
+    - path: data/processed/nuscenes_pedestrian_crops/manifest.jsonl
+      hash: md5
+      md5: 68342b7fd1f27f8173ae0233caa49db4
+      size: 82525881
+    - path: scripts/filter_crops.py
+      hash: md5
+      md5: 611a7970918d4f515c1b23312416af21
+      size: 181
+    - path: src/dataset/filter_crops.py
+      hash: md5
+      md5: 9d22327e465dfcda3686d2435066a52a
+      size: 5672
+    outs:
+    - path: data/processed/nuscenes_pedestrian_crops_filtered
+      hash: md5
+      md5: b390c95ea4812f2edcd358af5b1004c8.dir
+      size: 467732655
+      nfiles: 37626
+  qa_filtered_crops_preview:
+    cmd: .venv/bin/python scripts/visualize_crops.py --dataset-dir 
+      data/processed/nuscenes_pedestrian_crops_filtered --dataroot 
+      data/raw/nuscenes --output-dir data/qa/crops_preview_filtered 
+      --num-samples 64
+    deps:
+    - path: data/processed/nuscenes_pedestrian_crops_filtered/manifest.jsonl
+      hash: md5
+      md5: 31ab71f4a86c26416d80fdc1b8b4f5f9
+      size: 27932170
+    - path: scripts/visualize_crops.py
+      hash: md5
+      md5: e7ac91b437bab3695736d675c4d7a0db
+      size: 180
+    - path: src/visualization/crops.py
+      hash: md5
+      md5: b6efa53879f57f1eefec1c96981e4b73
+      size: 7684
+    outs:
+    - path: data/qa/crops_preview_filtered
+      hash: md5
+      md5: 40b57ec3c22f1b25570368e9a620c923.dir
+      size: 5480852
+      nfiles: 22
+  validate_nuscenes_files:
+    cmd: .venv/bin/python scripts/validate_nuscenes_files.py --dataroot 
+      data/raw/nuscenes --version v1.0-trainval --output-path 
+      data/qa/nuscenes_file_coverage.json
+    deps:
+    - path: data/raw/nuscenes/v1.0-trainval/sample_data.json
+      hash: md5
+      md5: 47849c6e58763708bbea87e276a6f7ba
+      size: 1345678379
+      isexec: true
+    - path: scripts/validate_nuscenes_files.py
+      hash: md5
+      md5: 14b41f520afafedf4c53a7bece380d32
+      size: 192
+    - path: src/dataset/validate_nuscenes_files.py
+      hash: md5
+      md5: 4c118bf858d40f07da2b5b74d394469a
+      size: 2818
+    outs:
+    - path: data/qa/nuscenes_file_coverage.json
+      hash: md5
+      md5: a6399458847629eaf9a396f95025ee42
+      size: 94834

@@ -1,0 +1,12 @@
+{
+  "name": "vitpose-h-or-rtmpose-l-aic-coco",
+  "framework": "mmpose",
+  "keypoint_schema": "coco_17",
+  "input_source": "filtered pedestrian crops",
+  "purpose": "pseudo-label generation only",
+  "primary_candidate": "ViTPose-H",
+  "practical_kaggle_candidate": "RTMPose-l AIC+COCO 256x192",
+  "mmpose_config": "configs/body_2d_keypoint/rtmpose/coco/rtmpose-l_8xb256-420e_aic-coco-256x192.py",
+  "checkpoint": "https://download.openmmlab.com/mmpose/v1/projects/rtmposev1/rtmpose-l_simcc-aic-coco_pt-aic-coco_420e-256x192-f016ffe0_20230126.pth",
+  "selection_reason": "Teacher should prioritize keypoint quality. RTMPose-l AIC+COCO is a practical first Teacher in Kaggle because MMPose provides official config/checkpoint and the COCO AP reported in the model zoo is strong for a reproducible baseline."
+}

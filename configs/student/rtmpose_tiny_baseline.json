@@ -1,0 +1,11 @@
+{
+  "name": "student-baseline",
+  "candidate_architectures": [
+    "rtmpose-t",
+    "litehrnet",
+    "mobilenetv3-heatmap"
+  ],
+  "keypoint_schema": "coco_17",
+  "input": "pedestrian crop",
+  "output": "17 human keypoints"
+}
