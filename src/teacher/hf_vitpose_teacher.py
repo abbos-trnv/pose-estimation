@@ -79,6 +79,7 @@ def predict_crop(processor: Any, model: Any, torch: Any, crop_path: Path, device
 
     inputs = processor(image, boxes=boxes, return_tensors="pt")
     inputs = {key: value.to(device) if hasattr(value, "to") else value for key, value in inputs.items()}
+    inputs["dataset_index"] = torch.tensor([0], device=device)
 
     with torch.no_grad():
         outputs = model(**inputs)
