@@ -344,6 +344,17 @@ python scripts/run_hf_vitpose_teacher.py \
   --limit 128
 ```
 
+После Teacher inference используется умеренная фильтрация pseudo-labels:
+
+```bash
+python scripts/filter_pseudo_labels.py \
+  --labels-path data/pseudo/nuscenes_pose_teacher/pseudo_labels.jsonl \
+  --output-dir data/pseudo/nuscenes_pose_teacher_filtered \
+  --config configs/filtering/pseudo_labels_default.json
+```
+
+Baseline-правило: сохранять примеры с mean confidence `>= 0.5` и минимум `8` уверенными keypoints.
+
 И собрать COCO-like dataset:
 
 ```bash
